@@ -1,0 +1,72 @@
+body{
+    border: 1px solid black ;
+    padding-top: 40px;
+}
+
+#head_title{
+    border: 1px solid black ;
+    text-align: center;
+    margin-bottom: 100px;
+    font-size: 2.5em;
+}
+
+.rotto_list{
+    width:fit-content;
+    margin: 0 auto;
+
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.rotto_num{
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    margin-left: 15px;
+    margin-bottom: 5px;
+    font-size: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#rotto_num_1{
+    /* background: linear-gradient(to bottom right, rgb(255, 196, 0), rgb(235, 180, 0)); */
+    background-color: rgb(255, 196, 0);
+    box-shadow: 5px 10px 5px rgba(58, 58, 58, 0.568);
+}
+#rotto_num_2{
+    /* background: linear-gradient(to bottom right, rgb(255, 210, 64), rgb(255, 118, 175)); */
+    background-color: rgb(255, 236, 245);
+    box-shadow: 5px 10px 5px rgba(58, 58, 58, 0.568);
+}
+#rotto_num_3{
+    /* background: linear-gradient(to bottom right, rgb(169, 255, 130), rgb(15, 199, 128)); */
+    background-color:rgb(22, 184, 224);
+    box-shadow: 5px 10px 5px rgba(58, 58, 58, 0.568);
+}
+#rotto_num_4{
+    /* background: linear-gradient(to bottom right, rgb(255, 243, 130), rgb(238, 171, 27)); */
+    background-color: rgb(253, 82, 91);
+    box-shadow: 5px 10px 5px rgba(58, 58, 58, 0.568);
+}
+#rotto_num_5{
+    /* background: linear-gradient(to bottom right, rgb(223, 223, 223), rgb(139, 139, 139)); */
+    background-color: rgb(236, 236, 236);
+    box-shadow: 5px 10px 5px rgba(58, 58, 58, 0.568);
+}
+#rotto_num_6{
+    background-color: rgb(58, 194, 25);
+    box-shadow: 5px 10px 5px rgba(58, 58, 58, 0.568);
+}
+#rotto_num_plus{
+    /* margin-left: 30px; */
+    background: linear-gradient(to bottom right, rgb(223, 126, 126), rgb(255, 251, 9));
+    /* background-color: rgb(79, 206, 178); */
+    box-shadow: 5px 10px 5px rgba(58, 58, 58, 0.568);
+}
+
+.reset{
+    margin-top: 70px;
+    text-align: center;
+}
