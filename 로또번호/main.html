@@ -4,36 +4,74 @@
     <meta charset="UTF-8">
     <title>로또번호 생성기</title>
     <link rel="stylesheet" href="main.css"/> 
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <script defer src="reset_rotto.js"></script>
+    <script defer src="get_winLotto.js"></script>
 </head>
 <body>
-    <h1 id="head_title">로또 번호 생성기</h1>
+    <header>
+        <h1 id="head_title">로또 번호 생성기</h1>
+    </header>
 
-    <div class="rotto_list">
-        <div class="rotto_num" id="rotto_num_1">
-            <span>1</span>
+    <section id="lotto_product">
+        <div class="rotto_list">
+            <div class="rotto_num" id="rotto_num_1">
+                <span>1</span>
+            </div>
+            <div class="rotto_num" id="rotto_num_2">
+                <span>2</span>
+            </div>
+            <div class="rotto_num" id="rotto_num_3">
+                <span>3</span>
+            </div>
+            <div class="rotto_num" id="rotto_num_4">
+                <span>4</span>
+            </div>
+            <div class="rotto_num" id="rotto_num_5">
+                <span>5</span>
+            </div>
+            <div class="rotto_num" id="rotto_num_6">
+                <span>6</span>
+            </div>
+            <div class="rotto_num" id="rotto_num_plus">
+                <span>7</span>
+            </div>
         </div>
-        <div class="rotto_num" id="rotto_num_2">
-            <span>2</span>
+    
+        <div class="reset">
+            <button id="reset_button">재생성</button>
         </div>
-        <div class="rotto_num" id="rotto_num_3">
-            <span>3</span>
-        </div>
-        <div class="rotto_num" id="rotto_num_4">
-            <span>4</span>
-        </div>
-        <div class="rotto_num" id="rotto_num_5">
-            <span>5</span>
-        </div>
-        <div class="rotto_num" id="rotto_num_6">
-            <span>6</span>
-        </div>
-        <div class="rotto_num" id="rotto_num_plus">
-            <span>7</span>
-        </div>
-    </div>
+    </section>
 
-    <div class="reset">
-        <button id="reset_button">재생성</button>
-    </div>
+    <section id="view-preLotto">
+        <div class="title">
+            <h2 id="win-title">이전 당첨번호</h2>
+            <h3 id="win-episode">1002회</h3>
+        </div>
+
+        <div class="rotto_list">
+            <div class="rotto_num" id="lotto-winNum_1">
+                <span>1</span>
+            </div>
+            <div class="rotto_num" id="lotto-winNum_2">
+                <span>2</span>
+            </div>
+            <div class="rotto_num" id="lotto-winNum_3">
+                <span>3</span>
+            </div>
+            <div class="rotto_num" id="lotto-winNum_4">
+                <span>4</span>
+            </div>
+            <div class="rotto_num" id="lotto-winNum_5">
+                <span>5</span>
+            </div>
+            <div class="rotto_num" id="lotto-winNum_6">
+                <span>6</span>
+            </div>
+            <div class="rotto_num" id="lotto-winNum_plus">
+                <span>7</span>
+            </div>
+        </div>
+    </section>
 </body>
 </html>
