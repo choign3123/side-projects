@@ -70,3 +70,7 @@ body{
     margin-top: 70px;
     text-align: center;
 }
+#reset_button{
+    border: 0;
+    outline: 0;
+}
