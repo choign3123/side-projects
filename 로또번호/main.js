@@ -12,3 +12,12 @@ bonus_checkBox.addEventListener("change", (e) => {
         bonus_num.style.display = "none";
     }
 })
+
+Kakao.init('e39db69f7d81c9032d9ac31aa25b070d');
+
+const button_kakao = document.querySelector("#kakao");
+button_kakao.addEventListener("click", () => {
+    Kakao.Link.sendScrap({
+        requestUrl: 'http://localhost:8080/lotto_num/main.html'
+      });
+})
