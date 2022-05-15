@@ -26,15 +26,11 @@ public class UserController {
     private final JwtService jwtService;
 
 
-
-
     public UserController(UserProvider userProvider, UserService userService, JwtService jwtService){
         this.userProvider = userProvider;
         this.userService = userService;
         this.jwtService = jwtService;
     }
-
-
 
     /**
      * 회원 조회 API
@@ -48,7 +44,7 @@ public class UserController {
     @GetMapping("") // (GET) 127.0.0.1:9000/users
     public BaseResponse<GetUserRes> getUsers(@RequestParam(required = true) String Email) {
         try{
-            // TODO: email 관련한 짧은 validation 예시입니다. 그 외 더 부가적으로 추가해주세요!
+            // TODO: Email 관련한 짧은 validation 예시입니다. 그 외 더 부가적으로 추가해주세요!
             if(Email.length()==0){
                 return new BaseResponse<>(POST_USERS_EMPTY_EMAIL);
             }
@@ -63,23 +59,11 @@ public class UserController {
         }
     }
 
-//    @ResponseBody
-//    @GetMapping("") // (GET) 127.0.0.1:9000/users/:userIdx
-//    public BaseResponse<GetUserRes> getUserByUserIdx(@PathVariable("userIdx")int userIdx) {
-//        try{
-//
-//            GetUserRes getUsersRes = userProvider.getUsersByIdx(userIdx);
-//            return new BaseResponse<>(getUsersRes);
-//        } catch(BaseException exception){
-//            return new BaseResponse<>((exception.getStatus()));
-//        }
-//    }
 
     @ResponseBody
-    @GetMapping("/{userIdx}") // (GET) 127.0.0.1:9000/users/:userIdx
+    @GetMapping("/{userIdx}/X") // (GET) 127.0.0.1:9000/users/:userIdx
     public BaseResponse<GetUserRes> getUserByIdx(@PathVariable("userIdx")int userIdx) {
         try{
-
             GetUserRes getUsersRes = userProvider.getUsersByIdx(userIdx);
             return new BaseResponse<>(getUsersRes);
         } catch(BaseException exception){
@@ -134,10 +118,44 @@ public class UserController {
             userService.modifyUserName(patchUserReq);
 
             String result = "";
-        return new BaseResponse<>(result);
+            return new BaseResponse<>(result);
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
 
+
+    /**
+     * 회원 삭제 API
+     * [PATCH] /users/:userIdx/status
+     */
+    @ResponseBody
+    @PatchMapping("{userIdx}/status")
+    public BaseResponse<String> patchUsersByIdx(@PathVariable("userIdx")int userIdx){
+        try {
+            DeleteUserReq deleteUserReq = new DeleteUserReq(userIdx);
+            userService.deleteUser("INACTIVE", deleteUserReq);
+
+            String result = "삭제되었습니다.";
+            return new BaseResponse<>(result);
+
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+    /**
+     * 유저 피드 조회 API
+     *
+     * */
+    @ResponseBody
+    @GetMapping("/{userIdx}") // (GET) 127.0.0.1:9000/:userIdx
+    public BaseResponse<GetUserFeedRes> getUserFeed(@PathVariable("userIdx") int userIdx) {
+        try {
+            GetUserFeedRes getUserFeedRes = userProvider.retrieveUserFeed(userIdx, userIdx);
+            return new BaseResponse<>(getUserFeedRes);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 }
+

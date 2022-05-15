@@ -1,9 +1,7 @@
 package com.example.demo.src.user;
 
 
-import com.example.demo.src.user.model.GetUserRes;
-import com.example.demo.src.user.model.PatchUserReq;
-import com.example.demo.src.user.model.PostUserReq;
+import com.example.demo.src.user.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -83,7 +81,71 @@ public class UserDao {
         return this.jdbcTemplate.update(modifyUserNameQuery,modifyUserNameParams);
     }
 
+    public int modifyUserStatus(String status, DeleteUserReq deleteUserReq){
+        String modifyUserStatusQuery = "update User set status = ? where userIdx = ?";
+        Object[] modifyUserStatusParams = new Object[]{status, deleteUserReq.getUserIdx()};
+//        int modifyUserStatusParams = deleteUserReq.getUserIdx();
+        return this.jdbcTemplate.update(modifyUserStatusQuery, modifyUserStatusParams);
+    }
 
+    //유저 정보 조회
+    public GetUserInfoRes selectUserInfo(int userIdx){
+        String selectUserInfoQuery = "select u.userIdx as userIdx,\n" +
+                "       u.nickName as nickName,\n" +
+                "       u.name as name,\n" +
+                "       u.profileImgUrl as profileImgUrl,\n" +
+                "       u.website as website,\n" +
+                "       u.introduce as introduction,\n" +
+                "       if(postCount is null, 0, postCount) as postCount,\n" +
+                "       if(followerCount is null, 0, followerCount) as followerCount,\n" +
+                "       if(followingCount is null, 0, followingCount) as followingCount\n" +
+                "from User as u\n" +
+                "    left join (select userIdx, count(postIdx) as postCount from Post where status = 'ACTIVE' group by userIDx) p on p.userIdx = u.userIdx\n" +
+                "    left join (select followerIdx, count(followIdx) as followerCount from Follow where status = 'ACTIVE' group by followerIdx) fc on fc.followerIdx = u.userIdx\n" +
+                "    left join (select followeeIdx, count(followIdx) as followingCount from Follow where status = 'ACTIVE' group by followeeIdx) fec on fec.followeeIdx = u.userIdx\n" +
+                "where u.userIdx = ?";
+        int selectUserInfoParams = userIdx;
+        return this.jdbcTemplate.queryForObject(selectUserInfoQuery,
+                (rs, rowNum) -> new GetUserInfoRes(
+                        rs.getString("nickName"),
+                        rs.getString("name"),
+                        rs.getString("profileImgUrl"),
+                        rs.getString("website"),
+                        rs.getString("introduction"),
+                        rs.getInt("followerCount"),
+                        rs.getInt("followingCount"),
+                        rs.getInt("postCount")
+                ),
+                selectUserInfoParams);
+    }
 
+    //유저 게시물
+    public List<GetUserPostsRes> selectUserPosts(int userIdx){
+        String selectUserPostsQuery = "select p.postIdx as postIdx,\n" +
+                "       pi.postImgUrl as postImgUrl\n" +
+                "from Post as p\n" +
+                "    left join PostImgUrl as pi on p.postIdx = pi.postIdx and pi.status = 'ACTIVE'\n" +
+                "where p.userIdx = ? and p.status = 'ACTIVE'\n" +
+                "group by p.postIdx";
 
+        int selectUserPostsParams = userIdx;
+        System.out.println("제대로 실행 됐나?");
+        return this.jdbcTemplate.query(selectUserPostsQuery,
+                (rs, rowNum) -> new GetUserPostsRes(
+                        rs.getInt("postIdx"),
+                        rs.getString("postImgUrl")
+                ),
+                selectUserPostsParams
+        );
+    }
+
+    //유저 idx가 유효한지 확인
+    public int checkUserExist(int userIdx){
+        String checkUserExistQuery = "select exists(select userIdx from User where userIdx = ?)";
+        int checkUserExistParams = userIdx;
+        return this.jdbcTemplate.queryForObject(checkUserExistQuery,
+                int.class,
+                checkUserExistParams);
+
+    }
 }
