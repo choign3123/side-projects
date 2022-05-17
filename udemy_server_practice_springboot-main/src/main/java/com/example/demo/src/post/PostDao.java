@@ -3,6 +3,8 @@ package com.example.demo.src.post;
 
 import com.example.demo.src.post.model.GetPostImgRes;
 import com.example.demo.src.post.model.GetPostRes;
+import com.example.demo.src.post.model.PatchPostReq;
+import com.example.demo.src.post.model.PostImgUrlReq;
 import com.example.demo.src.user.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -69,6 +71,50 @@ public class PostDao {
                 int.class,
                 checkUserExistParams);
 
+    }
+
+    // 게시물 작성
+    public int insertPosts(int userIdx, String content){
+        String insertPostQuery = "insert into Post(userIdx, content) values (?,?)";
+        Object[] insertPostParams = new Object[] {userIdx, content};
+        this.jdbcTemplate.update(insertPostQuery, insertPostParams);
+
+        String lastInsertIdxQuery = "select last_insert_id()";
+        return this.jdbcTemplate.queryForObject(lastInsertIdxQuery, int.class);
+    }
+
+    // 게시글 이미지 추가
+    public int insertPostImgs(int postIdx, PostImgUrlReq postImgUrlReq){
+        String insertPostImgsQuery = "insert into PostImgUrl(postIdx, postImgUrl) values (?, ?)";
+        Object[] insertPostImgsParams = new Object[] {postIdx, postImgUrlReq.getPostImgUrl()};
+        this.jdbcTemplate.update(insertPostImgsQuery, insertPostImgsParams);
+
+        String lastinsertPostImgsQuery = "select last_insert_id()";
+        return this.jdbcTemplate.queryForObject(lastinsertPostImgsQuery, int.class);
+    }
+
+    // 게시물 수정
+    public int updatePosts(int postIdx, String content){
+        String updatePostsQuery = "update Post set content = ? where postIdx = ?";
+        Object[] updatePostParams = new Object[] {content, postIdx};
+        return this.jdbcTemplate.update(updatePostsQuery, updatePostParams);
+    }
+
+    // 게시물이 존재하는지 확인
+    public int checkPostExist(int postIdx){
+        String checkPostExistQuery = "select exists(select postIdx from Post where postIdx = ?)";
+        int checkPostExistParams = postIdx;
+        return this.jdbcTemplate.queryForObject(checkPostExistQuery,
+                int.class,
+                checkPostExistParams);
+
+    }
+
+    // 게시물 삭제
+    public int deletePost(int postIdx){
+        String deletePostQuery = "update Post set status = 'DELETED' where postIdx = ?";
+        int deletePostParams = postIdx;
+        return this.jdbcTemplate.update(deletePostQuery, deletePostParams);
     }
 }
 

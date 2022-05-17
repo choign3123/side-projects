@@ -6,7 +6,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
+//@AllArgsConstructor
 public class BaseException extends Exception {
     private BaseResponseStatus status;
+
+    public BaseException(BaseResponseStatus status){
+        this.status = status;
+    }
 }
