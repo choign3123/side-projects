@@ -13,4 +13,8 @@ public class BaseException extends Exception {
     public BaseException(BaseResponseStatus status){
         this.status = status;
     }
+
+    public BaseResponseStatus getStaus (){
+        return status;
+    }
 }

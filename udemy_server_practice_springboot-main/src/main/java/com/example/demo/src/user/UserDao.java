@@ -56,6 +56,7 @@ public class UserDao {
                 getUsersByIdxParams);
     }
 
+
     public int createUser(PostUserReq postUserReq){
         String createUserQuery = "insert into User (name, nickName, phone, email, password) VALUES (?,?,?,?,?)";
         Object[] createUserParams = new Object[]{postUserReq.getName(), postUserReq.getNickName(),postUserReq.getPhone(), postUserReq.getEmail(), postUserReq.getPassword()};

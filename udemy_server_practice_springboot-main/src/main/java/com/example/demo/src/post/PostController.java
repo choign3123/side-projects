@@ -12,6 +12,7 @@ import com.example.demo.utils.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -102,4 +103,16 @@ public class PostController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+
+//    @ResponseBody
+//    @GetMapping(
+//            value = "/img.jpg",
+//            produces = MediaType.IMAGE_JPEG_VALUE
+//    )
+//    public BaseResponse<String> testImg(){
+//        System.out.println("되는건 만자?");
+////        String result = "C:\\Users\\Choi ga na\\Desktop\\side-projects\\udemy_server_practice_springboot-main\\UMC_1주차_워크북.jpg";
+////        return new BaseResponse<>(result);
+//
+//    }
 }
