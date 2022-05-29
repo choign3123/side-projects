@@ -1,8 +1,7 @@
 #git ignore
 resources/application.yml
 
-gradle/
-
+.idea/
 .gradle/
 
 src/main/resources/application.yml

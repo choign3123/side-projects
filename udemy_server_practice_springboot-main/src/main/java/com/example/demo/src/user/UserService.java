@@ -3,10 +3,7 @@ package com.example.demo.src.user;
 
 import com.example.demo.config.BaseException;
 
-import com.example.demo.src.user.model.DeleteUserReq;
-import com.example.demo.src.user.model.PatchUserReq;
-import com.example.demo.src.user.model.PostUserReq;
-import com.example.demo.src.user.model.PostUserRes;
+import com.example.demo.src.user.model.*;
 import com.example.demo.utils.JwtService;
 import com.example.demo.utils.SHA256;
 import org.slf4j.Logger;
@@ -80,4 +77,28 @@ public class UserService {
         }
     }
 
+    public PostLoginRes login(PostLoginReq postLoginReq) throws BaseException{
+        User user = userDao.getPwd(postLoginReq);
+        String encrytPwd;
+
+        try{
+            encrytPwd = new SHA256().encrypt(postLoginReq.getPassword());
+        } catch (Exception e){
+            throw new BaseException(PASSWORD_ENCRYPTION_ERROR);
+        }
+
+        logger.warn("유저 비밀번호 {}", user.getPassword());
+        logger.warn("암호화된 비밀번호인가? {}", encrytPwd);
+        logger.warn("왜 안되는거니?");
+
+        user.getPassword().equals(encrytPwd)
+        if(true){
+            int userIdx = user.getUserIdx();
+            String jwt = jwtService.createJwt(userIdx);
+            return new PostLoginRes(userIdx, jwt);
+        }
+        else{
+            throw new BaseException(FAILED_TO_LOGIN);
+        }
+    }
 }

@@ -149,4 +149,18 @@ public class UserDao {
                 checkUserExistParams);
 
     }
+
+    public User getPwd(PostLoginReq postLoginReq){
+        String getPwdQuery = "select userIdx, name, nickName, email, pw from User where email=?";
+        String getPwdParams = postLoginReq.getEmail();
+
+        return this.jdbcTemplate.queryForObject(getPwdQuery,
+                (rs, rowNum) -> new User(
+                        rs.getInt("userIdx"),
+                        rs.getString("name"),
+                        rs.getString("nickName"),
+                        rs.getString("email"),
+                        rs.getString("pw")),
+                getPwdParams);
+    }
 }

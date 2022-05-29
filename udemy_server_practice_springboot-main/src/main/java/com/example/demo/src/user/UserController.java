@@ -4,13 +4,13 @@ import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
 import com.example.demo.src.user.model.*;
 import com.example.demo.utils.JwtService;
+import com.fasterxml.jackson.databind.ser.Serializers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import static com.example.demo.config.BaseResponseStatus.POST_USERS_EMPTY_EMAIL;
-import static com.example.demo.config.BaseResponseStatus.POST_USERS_INVALID_EMAIL;
+import static com.example.demo.config.BaseResponseStatus.*;
 import static com.example.demo.utils.ValidationRegex.isRegexEmail;
 
 @RestController
@@ -157,6 +157,34 @@ public class UserController {
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
         }
+    }
+
+    @ResponseBody
+    @PostMapping("/login")
+    public BaseResponse<PostLoginRes> login(@RequestBody PostLoginReq postLoginReq){
+        try{
+            if(postLoginReq.getEmail() == null){
+                return new BaseResponse<>(POST_USERS_EMPTY_EMAIL);
+            }
+            if(postLoginReq.getPassword() == null){
+                return new BaseResponse<>(POST_USERS_EMPTY_PASSWORD);
+            }
+            if(!isRegexEmail(postLoginReq.getEmail())){
+                return new BaseResponse<>(POST_USERS_INVALID_EMAIL);
+            }
+
+            PostLoginRes postLoginRes = userService.login(postLoginReq);
+            return new BaseResponse<>(postLoginRes);
+        } catch (BaseException e){
+            return new BaseResponse<>(e.getStatus());
+        }
+    }
+
+    @ResponseBody
+    @GetMapping("test")
+    public BaseResponse<String> test(@RequestBody TestReq testReq){
+        System.out.println(testReq.getUserIdx());
+        return new BaseResponse<>("성공");
     }
 }
 

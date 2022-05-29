@@ -35,6 +35,8 @@ public enum BaseResponseStatus {
 
     POST_EMPTY_POST_ID(false, 2020, "게시물 id값을 확인해주세요."),
 
+    POST_USERS_EMPTY_PASSWORD(false, 2021, "비밀번호를 입력해주세요."),
+
     /**
      * 3000 : Response 오류
      */
