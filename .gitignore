@@ -1,0 +1,17 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+
+#idea과 gradle
+udemy_server_practice_springboot-main/.gradle/
+udemy_server_practice_springboot-main/.idea/
+udemy_server_practice_springboot-main/src/main/resources/application.yml
+
+se7-server(손승현)/.gradle/
+se7-server(손승현)/.idea/
+server/se7-server(손승현)/src/main/resources/application.yml
