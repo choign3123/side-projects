@@ -134,7 +134,7 @@ public class ClthController {
      @RequestBody PatchClthReq patchClthReq){
         //계절이나 카테고리가 비어있다면
         if (patchClthReq.getSeason() == null || patchClthReq.getCategory() == null){
-            return new BaseResponse<>(POST_USERS_EMPTY);
+            return new BaseResponse<>(POST_CLTH_EMPTY);
         }
         //카테고리에 포함되지 않는 문자열이 들어오면
         if (!category.contains(patchClthReq.getCategory())){
@@ -152,6 +152,23 @@ public class ClthController {
             return new BaseResponse<>(result);
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    //옷 검색
+    //[get] /clths/search/{userIdx}?query=
+    @ResponseBody
+    @GetMapping("/search/{userIdx}")
+    public BaseResponse<List<GetClthsRes>> searchClths(@PathVariable("userIdx") int userIdx, @RequestParam("query") String query){
+        // query string으로 들오온 문자열에서 공백 -> | (후에 sql 쿼리문에서 or 검색을 위한 것임)
+        query = query.replaceAll(" ", "|");
+        //System.out.println(query);
+
+        try{
+            List<GetClthsRes> getClthsRes = clthProvider.retrieveClthsBySearch(userIdx, query);
+            return new BaseResponse<>(getClthsRes);
+        } catch (BaseException e){
+            return new BaseResponse<>(e.getStatus());
         }
     }
 }
