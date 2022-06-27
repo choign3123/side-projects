@@ -38,6 +38,8 @@ se7/closet/src/user/UserProvider.java
  se7.closet.src.user.UserProvider
 se7/closet/src/clothes/model/GetClthInfoRes.java
  se7.closet.src.clothes.model.GetClthInfoRes
+se7/closet/src/test/model/PostImgUpload.java
+ se7.closet.src.test.model.PostImgUpload
 se7/closet/config/BaseException.java
  se7.closet.config.BaseException
 se7/closet/src/test/TestController.java
